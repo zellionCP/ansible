@@ -1,0 +1,43 @@
+## Permet de se connecter à chaque host (sans prob de key SSH à la première connexion)
+#- name: Test SSH connection playbook
+#  hosts: all
+#  gather_facts: no  # gather facts AFTER the host key has been accepted instead
+#  tasks:
+#  - name: Check SSH known_hosts for hosts
+#    local_action: shell ssh-keygen -F {{ inventory_hostname }}
+#    register: checkForKnownHostsEntry
+#    failed_when: false
+#    changed_when: false
+#    ignore_errors: yes
+#  - name: Add hosts to SSH known hosts automatically
+#    when: checkForKnownHostsEntry.rc == 1
+#    changed_when: "'found' not in checkForKnownHostsEntry.stdout"
+#    set_fact:
+#      ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+#  - name: Write the new ec2 instance host key to known hosts
+#    connection: local
+#    shell: "ssh-keyscan -H {{ inventory_hostname }} >> ~/.ssh/known_hosts"
+#
+#- name : Debut des tests
+#  hosts: all
+#  tasks:
+#  - name: test
+#    file:
+#      path: /tmp/test
+#      state: directory
+#  - name: Install Apache
+#    package:
+#      name: apache2
+#      state: present
+#  - name: Start and enable Apache
+#    service:
+#      name: apache2
+#      state: started
+#      enabled: true
+
+- hosts: all
+  become: yes
+  become_user: root
+  become_method: sudo
+  roles:
+    - vault

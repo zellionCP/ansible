@@ -1,0 +1,8 @@
+collections:
+- name: community.general
+- name: community.mysql
+- name: community.grafana
+- name: community.network
+- name: community.hashi_vault
+- name: community.docker
+- name: community.crypto
